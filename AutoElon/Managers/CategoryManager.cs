@@ -1,4 +1,6 @@
 ﻿using AutoElon.Data.Entities;
+using AutoElon.Data.Mappers;
+using AutoElon.Data.Models;
 using ProductAPI.Repositories;
 
 namespace ProductAPI.Managers;
@@ -12,15 +14,27 @@ public class CategoryManager
         _categoryRepository = categoryRepository;
     }
 
-  
-
-    public Task<Category> GetCategoryById(int categoryId)
+    public async Task<CategoryModel> AddCategory(CategoryDto dto)
     {
-        throw new NotImplementedException();
+        var model = new Category()
+        {
+            Name = dto.Name,
+            ParentId = dto.ParentId,
+        };
+        await _categoryRepository.AddCategory(model);
+        return model.ToModel();
+    } 
+    
+
+    public  async Task<CategoryModel> GetCategoryById(Guid categoryId)
+    {
+        var category = await _categoryRepository.GetCategoryById(categoryId);
+        return category.ToModel();
+
     }
 
-    public Task DeleteCategory(int categoryId)
+    public async Task DeleteCategory(Guid categoryId)
     {
-        throw new NotImplementedException();
+        await _categoryRepository.DeleteCategory(categoryId);
     }
 }

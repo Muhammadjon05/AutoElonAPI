@@ -16,7 +16,6 @@ public class AnnouncementController : ControllerBase
     {
         _announcementManager = announcementManager;
     }
-
     [HttpPost]
     public async Task<IActionResult> AddAnnouncement([FromForm]AnnouncementDto dto)
     {
@@ -31,10 +30,10 @@ public class AnnouncementController : ControllerBase
             throw;
         }
     }
+    
     [HttpGet("announcementId")]
     public async Task<IActionResult> GetAnnouncementById(Guid announcementId)
     {
-
         try
         {
             var announcement = await _announcementManager.GetAnnouncementById(announcementId);

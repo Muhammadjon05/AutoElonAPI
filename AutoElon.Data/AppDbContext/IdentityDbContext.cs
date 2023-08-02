@@ -17,7 +17,10 @@ public class IdentityDbContext: DbContext
         .WithMany(c => c.Children)
         .HasForeignKey(c => c.ParentId)
         .OnDelete(DeleteBehavior.NoAction);
-        modelBuilder.Entity<User>().HasMany(i => i.AnnouncementUsers).WithOne(i => i.User);
+        
+        modelBuilder.Entity<User>()
+            .HasMany(i => i.AnnouncementUsers)
+            .WithOne(i => i.User);
         modelBuilder.Entity<Announcement>().HasMany(i => i.AnnouncementUsers).WithOne(i => i.Announcement);
 
     }
