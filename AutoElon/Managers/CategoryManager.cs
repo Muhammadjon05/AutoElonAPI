@@ -1,4 +1,5 @@
 ﻿using AutoElon.Data.Entities;
+using AutoElon.Data.Exceptions;
 using AutoElon.Data.Mappers;
 using AutoElon.Data.Models;
 using ProductAPI.Repositories;
@@ -16,13 +17,21 @@ public class CategoryManager
 
     public async Task<CategoryModel> AddCategory(CategoryDto dto)
     {
-        var model = new Category()
+        var result = await _categoryRepository.IsExist(dto.Name);
+        if (!result)
         {
-            Name = dto.Name,
-            ParentId = dto.ParentId,
-        };
-        await _categoryRepository.AddCategory(model);
-        return model.ToModel();
+            var model = new Category()
+            {
+                Name = dto.Name,
+                ParentId = dto.ParentId,
+            };
+            await _categoryRepository.AddCategory(model);
+            return model.ToModel();
+        }
+        else
+        {
+            throw new CategoryNameIsExistException(dto.Name);
+        }
     } 
     
 
@@ -37,4 +46,6 @@ public class CategoryManager
     {
         await _categoryRepository.DeleteCategory(categoryId);
     }
+
+ 
 }
