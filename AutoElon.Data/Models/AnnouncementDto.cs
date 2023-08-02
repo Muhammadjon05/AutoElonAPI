@@ -16,5 +16,5 @@ public class AnnouncementDto
     public string Region { get; set; }
     public string District { get; set; }
     public string PhoneNumber { get; set; }
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
 }

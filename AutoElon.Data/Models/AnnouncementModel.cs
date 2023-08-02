@@ -14,9 +14,9 @@ public class AnnouncementModel
     public string Region { get; set; }
     public string District { get; set; }
     public string PhoneNumber { get; set; }
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
 
-    public AnnouncementModel
+    /*public AnnouncementModel
     (
             Guid Id,
             string Marka,
@@ -46,5 +46,5 @@ public class AnnouncementModel
         this.District = District;
         this.PhoneNumber = PhoneNumber;
         this.CategoryId = CategoryId;
-        }
+        }*/
 }
