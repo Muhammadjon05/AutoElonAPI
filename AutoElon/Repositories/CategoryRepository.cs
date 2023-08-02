@@ -22,13 +22,15 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<Category> GetCategoryById(Guid categoryId)
     {
-        var category = await _identityDbContext.Categories.FirstOrDefaultAsync(i => i.Id == categoryId);
+        var category = await _identityDbContext.Categories.
+            FirstOrDefaultAsync(i => i.Id == categoryId);
         if (category == null)
         {
             throw new CategoryNotException(categoryId.ToString());
         }
         return category;
     }
+    
 
     public async Task DeleteCategory(Guid categoryId)
     {
@@ -36,5 +38,13 @@ public class CategoryRepository : ICategoryRepository
         _identityDbContext.Categories.Remove(category);
         await _identityDbContext.SaveChangesAsync();
         
+    }
+    public async Task<bool> IsExist(string username)
+    {
+        if (await _identityDbContext.Categories.AnyAsync(i => i.Name == username))
+        {
+            throw new CategoryNameIsExistException(username);
+        }
+        return false;
     }
 }

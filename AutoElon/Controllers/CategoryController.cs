@@ -17,17 +17,16 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddCategory(CategoryDto dto)
+    public async Task<IActionResult> AddCategory([FromForm]CategoryDto dto)
     {
         try
         {
-            var category = await _categoryManager.AddCategory(dto);
+           var category =  await _categoryManager.AddCategory(dto);
             return Ok(category);
         }
-        catch (Exception e)
+        catch (CategoryNameIsExistException e)
         {
-            Console.WriteLine(e);
-            throw;
+            return BadRequest($"Username is already exist:{dto.Name}");
         }
     } 
     
